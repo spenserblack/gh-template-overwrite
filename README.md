@@ -3,6 +3,9 @@
 This extension will overwrite your *current files* with the contents from a
 template repository
 
+:warning: This will *not* commit any changes. Review the tracked changes before
+committing.
+
 ## Why?
 
 My use case was that I wanted to do a major change to the implementation of an
@@ -21,4 +24,4 @@ git commit -m "Initial commit of new implementation"
 
 This extension creates a remote repository called `template`. It then removes
 all tracked files, fetches `template` and gets its default branch from the API,
-and does `git reset --soft template/<default>`.
+untracks the current files, and does `git checkout template/<default>` -- .`.
