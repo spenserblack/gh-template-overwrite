@@ -29,4 +29,9 @@ DEFAULT_BRANCH=$(gh api "repos/$REPO" --jq '.default_branch')
 echo "Adding remote 'template' with url $CLONE_URL"
 git remote add template $CLONE_URL
 git fetch template
-git reset --soft template/$DEFAULT_BRANCH
+
+echo "Untracking existing files"
+git rm --cached -r .
+
+echo "Tracking template files"
+git checkout template/$DEFAULT_BRANCH -- .
