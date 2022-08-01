@@ -24,4 +24,4 @@ git commit -m "Initial commit of new implementation"
 
 This extension creates a remote repository called `template`. It then removes
 all tracked files, fetches `template` and gets its default branch from the API,
-untracks the current files, and does `git checkout template/<default>` -- .`.
+untracks the current files, and does `git checkout template/<default> -- .`.
