@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -e
+
+REPO=$1
+
+if [ -z "$REPO" ]; then
+	echo "Usage: $0 <user>/<repo>" >&2
+	exit 1
+fi
+
+PROTOCOL_CFG=$(gh config get git_protocol)
+
+# TODO 1 API request per repo
+case "$PROTOCOL_CFG" in
+	ssh)
+		CLONE_URL=$(gh api "repos/$REPO" --jq '.ssh_url')
+		;;
+	https)
+		CLONE_URL=$(gh api "repos/$REPO" --jq '.clone_url')
+		;;
+	*)
+		echo "Unknown git protocol: $PROTOCOL_CFG" >&2
+		exit 1
+		;;
+esac
+
+DEFAULT_BRANCH=$(gh api "repos/$REPO" --jq '.default_branch')
+
+echo "Adding remote 'template' with url $CLONE_URL"
+git remote add template $CLONE_URL
+git fetch template
+git reset --soft template/$DEFAULT_BRANCH
