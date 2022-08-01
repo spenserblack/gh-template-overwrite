@@ -12,6 +12,7 @@ setup of the new implementation.
 ## Usage
 
 ```bash
+git checkout -b refactor/new-implementation
 gh template-overwrite <user>/<repo>
 git commit -m "Initial commit of new implementation"
 ```
